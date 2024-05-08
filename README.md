@@ -19,7 +19,7 @@ This project is set up using FastAPI to create a simple web application. The app
    ```
 3. Run the application:
    ```
-   poetry run uicicorn main:app --reload
+   poetry run uvicorn main:app --reload
    ```
 
 ## Local setup using Docker
