@@ -7,7 +7,7 @@ This project is set up using FastAPI to create a simple web application. The app
 ## Requirements
 
 - [Docker](https://www.docker.com/get-started/)
-- [Python > 3.10](https://www.python.org/downloads/)
+- [Python >= 3.10](https://www.python.org/downloads/)
 - [Poetry](https://python-poetry.org/docs/)
 
 ## Local setup
