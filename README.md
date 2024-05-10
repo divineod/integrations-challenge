@@ -4,6 +4,15 @@
 
 This project serves as the preliminary setup for the Integrate challenge, designed as part of the pre-interview process. Please ensure you follow the instructions detailed below to properly set up and verify the project's functionality before your interview commences.
 
+## Agenda
+
+- **Intro**: A brief introduction to the interview process and the goals for the day.
+- **Challenge Overview**: Explanation of the technical challenge, including its scope and expected outcomes.
+- **Implementation**: Discussion on the approach and technologies to be used in the challenge.
+- **API Design Questions**: Interactive session to explore the candidate's understanding and approach to API design principles.
+- **Questions**: An opportunity for candidates to ask any questions they may have about the challenge, the company, or future work.
+- **Total Duration**: ~70 minutes
+
 ## Requirements
 
 - [Python >= 3.10](https://www.python.org/downloads/)
