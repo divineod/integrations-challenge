@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Mariano Carballal <mariano.carballal@taktile.com>"]
 readme = "README.md"
-package-mode = false
+package-mode = True
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -12,6 +12,8 @@ fastapi = "^0.111.0"
 uvicorn = "^0.29.0"
 pydantic = "^2.7.1"
 requests = "^2.32.3"
+python-dotenv = "^1.0.1"
+pytest = "^8.3.4"
 
 
 [tool.poetry.group.dev.dependencies]
