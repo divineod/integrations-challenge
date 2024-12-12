@@ -1,61 +1,130 @@
-# Integrate Challenge
+# Creditsafe Company Report API
 
 ## Overview
+The **Creditsafe Company Report API** provides endpoints to authenticate, search for companies, and generate credit reports using the Creditsafe API. This application is built with FastAPI, providing asynchronous operations for scalability and efficiency.
 
-This project serves as the preliminary setup for the Integrate challenge, designed as part of the pre-interview process. Please ensure you follow the instructions detailed below to properly set up and verify the project's functionality before your interview commences.
+## Features
+- **Authentication**: Authenticate and obtain a JWT token to access the Creditsafe API.
+- **Company Search**: Search for a company by name and country.
+- **Credit Report**: Generate a detailed credit report for a specific company.
 
-## Agenda
+---
 
-- **Intro**: A brief introduction to the interview process and the goals for the day.
-- **Challenge Overview**: Explanation of the technical challenge, including its scope and expected outcomes.
-- **Implementation**: Discussion on the approach and technologies to be used in the challenge.
-- **API Design Questions**: Interactive session to explore the candidate's understanding and approach to API design principles.
-- **Questions**: An opportunity for candidates to ask any questions they may have about the challenge, the company, or future work.
-- **Total Duration**: ~70 minutes
+## Base URL
+**Local Development**: `http://localhost:8000`
 
-## Requirements
+---
 
-- [Python >= 3.10](https://www.python.org/downloads/)
-- [Poetry](https://python-poetry.org/docs/)
-- [Optional] [Docker](https://www.docker.com/get-started/)
+## Authentication
+Authentication with the Creditsafe API is handled internally. No additional user action is required to manage tokens.
 
-## Local setup
+---
 
-1. Navigate to the project directory.
-2. Install the dependencies:
+## Endpoints
+
+### 1. **Search Company**
+Search for a company by its name and country.
+
+- **URL**: `/company/search`
+- **Method**: `POST`
+- **Request Body**:
+  ```json
+  {
+    "name": "string",
+    "country": "string",
+    "exact": true
+  }
+  ```
+  - `name` (required): The name of the company to search for.
+  - `country` (optional): The country code (e.g., "US").
+  - `exact` (optional): Whether to perform an exact name match (default: `false`).
+
+- **Response**:
+  ```json
+  {
+    "connectId": "string",
+    "name": "string",
+    "address": "string",
+    "status": "string"
+  }
+  ```
+  - `connectId`: Unique ID for the company.
+  - `name`: Name of the company.
+  - `address`: Company address.
+  - `status`: Current company status (e.g., "Active").
+
+- **Example**:
+  ```bash
+  curl -X POST http://localhost:8000/company/search \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Apple", "country": "US", "exact": true}'
+  ```
+
+---
+
+### 2. **Generate Credit Report**
+Retrieve a detailed credit report for a specific company using its `connectId`.
+
+- **URL**: `/company/report`
+- **Method**: `POST`
+- **Request Body**:
+  ```json
+  {
+    "connect_id": "string"
+  }
+  ```
+  - `connect_id` (required): The unique ID of the company obtained from the `/company/search` endpoint.
+
+- **Response**:
+  ```json
+  {
+    "company_name": "string",
+    "credit_score": 85,
+    "credit_limit": 5000000,
+    "report_details": {...}
+  }
+  ```
+  - `company_name`: Name of the company.
+  - `credit_score`: The company's credit score (if available).
+  - `credit_limit`: Credit limit of the company (if available).
+  - `report_details`: Detailed report data.
+
+- **Example**:
+  ```bash
+  curl -X POST http://localhost:8000/company/report \
+  -H "Content-Type: application/json" \
+  -d '{"connect_id": "12345"}'
+  ```
+
+---
+
+## Error Handling
+All errors are returned in the following format:
+```json
+{
+  "detail": "Error message"
+}
+```
+- **401 Unauthorized**: Authentication failed.
+- **404 Not Found**: No data found for the requested resource.
+- **500 Internal Server Error**: An unexpected error occurred.
+
+---
+
+## Running Locally
+1. Build and run the Docker container:
+   ```bash
+   docker build -t divineod/credit-report-api:latest .
+   docker run -p 8000:8000 divineod/credit-report-api:latest
    ```
-   poetry install
-   ```
-3. Run the application:
-   ```
-   poetry run uvicorn main:app --reload
-   ```
 
-## (Alternatively) Local setup using Docker
+2. Access the API documentation at:
+   - Swagger UI: `http://localhost:8000/docs`
+   - ReDoc: `http://localhost:8000/redoc`
 
-1. Clone the repository.
-2. Navigate to the project directory.
-3. Build the Docker container:
-   ```
-   docker build -t integration-challenge .
-   ```
-4. Run the Docker container:
-   ```
-   docker run -p 8000:8000 integration-challenge
-   ```
+---
 
-## Verify the setup
-
-Once the application is running, you can access it by navigating to `http://localhost:8000/` in your web browser. This will display a list of examples fetched from the FastAPI application.
-
-Go to `http://localhost:8000/docs` to access the autogenerated documentation, where you can test the API endpoints.
-
-## Recommended resources
-
-- [FastAPI](https://fastapi.tiangolo.com/)
-- [Pydantic](https://docs.pydantic.dev/latest/)
-- [OpenAPI](https://spec.openapis.org/oas/latest.html)
-- [JSON API](https://jsonapi.org/)
-- [Google API Guidelines](https://cloud.google.com/apis/design)
-- [Zalando API Guidelines](https://opensource.zalando.com/restful-api-guidelines/)
-- [Microsoft REST API Guidelines](https://github.com/microsoft/api-guidelines)
+## Notes
+- Ensure valid credentials are set for Creditsafe authentication.
+- Use the Swagger UI for interactive testing and debugging.
+- Optimize requests to avoid exceeding API rate limits.
